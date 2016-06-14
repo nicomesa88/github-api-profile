@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+#container {
+    display: flex;
+}
+
+#leftCol {
+    flex: 1;
+}
+
+#rightCol{
+    flex: 3;
+}
