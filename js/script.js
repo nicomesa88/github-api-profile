@@ -29,5 +29,14 @@ var params = {
 var promise = $.getJSON(url + genParamString(params))
 var userPromise = $.getJSON(userUrl +genParamString(params))
 
-promis.then(repoDataHandler)
+
+var repoDataHandler = function(){
+
+}
+
+var userDataHandler = function(){
+
+}
+
+promise.then(repoDataHandler)
 userPromise.then(userDataHandler)
