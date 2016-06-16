@@ -9,7 +9,7 @@ var genParamString = function(paramObject) {
 var name
 
 try {
-    var token = GLOBAL_TOKEN
+    var token = 'a9ee5664d527ded2c88b93a01d4d05e9a7f35009'
 }
 catch (e) {
     var token = ''
