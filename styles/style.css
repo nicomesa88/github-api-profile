@@ -2,18 +2,69 @@
   box-sizing: border-box;
 }
 
+body {
+    font-family: Helvetica, arial;
+}
+
 .col{
-    padding:3%;
+    padding: 3%;
+}
+
+.cardStats {
+    text-align: center;
+}
+
+.stats {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4078c0;
+    display: inline-block;
+    width: 33%;
+}
+
+.portrait img {
+    flex: 1;
+    vertical-align: middle;
+    max-height: 230px;
+    max-width: 230px;
+    border-radius: 6px;
 }
 
 #container {
     display: flex;
+    width: 75%;
+    margin: 0 auto;
+}
+
+#statText {
+    color: #666;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+#fullName {
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: bold;
 }
 
 #leftCol {
     flex: 1;
 }
 
-#rightCol{
-    flex: 3;
+#rightCol {
+    flex: 4;
+}
+
+#usrBio {
+    font-size: 14px;
+    color: #767676;
+}
+
+#userName {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    color: #666;
 }

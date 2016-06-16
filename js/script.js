@@ -34,8 +34,47 @@ var repoDataHandler = function(){
 
 }
 
-var userDataHandler = function(){
 
+var userDataHandler = function(responsObj){
+    console.log(responsObj)
+    var userHtmlStr = ''
+    var profilPic = responsObj.avatar_url
+    var fullName = responsObj.name
+    var usrName = responsObj.login
+    var userBio = responsObj.bio
+    var followers = responsObj.followers
+    var following = responsObj.following
+    //user's profile picture
+    userHtmlStr += '<div class="portrait">'
+    userHtmlStr += '<img src ="' + profilPic + '">'
+    userHtmlStr += '</div>'
+    //User's full name
+    userHtmlStr += '<div class="userName">'
+    userHtmlStr += '<div id="fullName"> ' + fullName + '</div>'
+    //Github user name
+    userHtmlStr += '<div id="userName">' + usrName + '</div>'
+    userHtmlStr += '</div>'
+    userHtmlStr += '<p></p>'
+    //User Bio
+    userHtmlStr += '<div id="usrBio">' + userBio + '</div>'
+    userHtmlStr += '<hr>'
+    userHtmlStr += '<hr>'
+    //stats for followers, starred, and following
+    userHtmlStr += '<div class="cardStats">'
+    userHtmlStr += '<div class ="stats" id="followers">' + followers
+    userHtmlStr += '<p id="statText">' + 'Followers' + '</p>'
+    userHtmlStr += '</div>'
+    userHtmlStr += '<div class ="stats" id="starred">' + '0'
+    userHtmlStr += '<p id="statText">' + 'Starred' + '</p>'
+    userHtmlStr += '</div>'
+    userHtmlStr += '<div class ="stats" id="following">' + following
+    userHtmlStr += '<p id="statText">' + 'Following' + '</p>'
+    userHtmlStr += '</div>'
+    userHtmlStr += '</div>'
+    userHtmlStr += '<hr>'
+
+    var leftContainer = document.querySelector("#leftCol")
+    leftContainer.innerHTML = userHtmlStr
 }
 
 promise.then(repoDataHandler)
