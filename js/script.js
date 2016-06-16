@@ -1,6 +1,9 @@
 var genParamString = function(paramObject) {
     var outputString = '?'
     for (var key in paramObject) {
+        if (key === "access_token" && !paramObject[key]) {
+            continue
+        }
         outputString += key + '=' + paramObject[key] + '&'
     }
     return outputString.substr(0,outputString.length - 1)
