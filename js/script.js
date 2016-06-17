@@ -54,11 +54,11 @@ var userDataHandler = function(responsObj){
     var followers = responsObj.followers
     var following = responsObj.following
     var userLocation = responsObj.location
-    if (userLocation === null) {
+    if (!userLocation) {
         userLocation == ''
     }
     var userEmail = responsObj.email
-    if (userEmail === null) {
+    if (!userEmail) {
         userEmail = ''
     }
     var joined = responsObj.created_at
@@ -118,6 +118,63 @@ var userDataHandler = function(responsObj){
 
 var repoDataHandler = function(repoAry){
     var repoHtmlStr = ''
+    for (var i = 0; i < repoAry.length; i++){
+        var repoObj = repoAry[i],
+            repoName = repoObj.name,
+            repoDescription = repoObj.descrpition,
+            repoUpdate = repoObj.updated_at
+        if (!repoDescription) {
+            repoDescription = ''
+        }
+
+        var timeNow = new Date();
+            var timeNowMilsec = timeNow.getTime();
+            var repoUpdateTime = new Date (repoUpdate)
+            var repoUpdateTimeMilsec = repoUpdateTime.getTime();
+            var repoElapsedTime = timeNowMilsec - repoUpdateTimeMilsec
+
+            var elapsedTime = function (milSecs) {
+                var s = 1000,
+                    m = s * 60,
+                    h = m * 60,
+                    d = h * 24,
+                    m = d * 31,
+                    y = m * 12
+
+                var secs = Math.floor(milSecs/s) + " sec",
+                    mins = Math.floor(milSecs/(m)) + " min",
+                    hrs = Math.floor(milSecs/(h)) + " hr",
+                    days = Math.floor(milSecs/(d)) + " day",
+                    mos = Math.floor(milSecs/(m)) + " mo",
+                    yrs = Math.floor(milSecs/(y)) + " yr"
+
+                var timeArray = [yrs, mos, days, hrs, mins, secs]
+
+                for(var i = 0; i < timeArray.length; i++) {
+                    if (parseInt(timeArray[i]) !== 0) {
+
+                        if(parseInt(timeArray[i]) >= 2) {
+                            return "Updated" + '  ' + timeArray[i] + "s ago"
+                        }
+                        else if (parseInt(timeArray[i]) < 2) {
+                                return "Updated" + '  ' + timeArray[i] + " ago"
+                        }
+                    }
+
+                }
+
+            }
+
+            var newRepoUpdateTime = elapsedTime(repoElapsedTime)
+
+        repoHtmlStr += '<ul class = "repoInfo">'
+        repoHtmlStr += '<h1 class = "repoName">' + repoName + '</h1>'
+        repoHtmlStr += '<p class="description">' + repoDescription + '</p>'
+        repoHtmlStr += '<p class="update">' + newRepoUpdateTime + '</p>'
+        repoHtmlStr += '<hr>'
+
+    }
+    rightContainer.innerHTML = repoHtmlStr
 }
 
 repoPromise.then(repoDataHandler)
