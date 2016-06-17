@@ -11,6 +11,7 @@ var genParamString = function(paramObject) {
 
 var name
 
+//work around for github API token
 try {
     var token = GLOBAL_TOKEN
 }
@@ -29,39 +30,72 @@ var params = {
     access_token: token
 }
 
-var promise = $.getJSON(url + genParamString(params))
+var repoPromise = $.getJSON(url + genParamString(params))
 var userPromise = $.getJSON(userUrl +genParamString(params))
 
 
-var repoDataHandler = function(){
+var container = document.querySelector("#container")
+var leftContainer = document.querySelector("#leftCol")
+var rightContainer = document.querySelector("#rightCol")
 
-}
-
+//Construst user data info
 
 var userDataHandler = function(responsObj){
     console.log(responsObj)
+
+    //create an empty string
     var userHtmlStr = ''
+
+    //get info from API
     var profilPic = responsObj.avatar_url
     var fullName = responsObj.name
     var usrName = responsObj.login
     var userBio = responsObj.bio
     var followers = responsObj.followers
     var following = responsObj.following
+    var userLocation = responsObj.location
+    if (userLocation === null) {
+        userLocation == ''
+    }
+    var userEmail = responsObj.email
+    if (userEmail === null) {
+        userEmail = ''
+    }
+    var joined = responsObj.created_at
+
+    //modify date to show
+    var d = new Date(joined),
+        dstring = d.toDateString(),
+        newdString = dstring.substring(3),
+        dateArray = newdString.split(' ')
+        var newArray = []
+        var addComma = dateArray[2] + ','
+        joinDate = dateArray[1] + ' ' +  addComma + ' ' + dateArray[3]
+
     //user's profile picture
     userHtmlStr += '<div class="portrait">'
     userHtmlStr += '<img src ="' + profilPic + '">'
     userHtmlStr += '</div>'
     //User's full name
+
     userHtmlStr += '<div class="userName">'
     userHtmlStr += '<div id="fullName"> ' + fullName + '</div>'
+
     //Github user name
     userHtmlStr += '<div id="userName">' + usrName + '</div>'
     userHtmlStr += '</div>'
     userHtmlStr += '<p></p>'
+
     //User Bio
     userHtmlStr += '<div id="usrBio">' + userBio + '</div>'
     userHtmlStr += '<hr>'
+    userHtmlStr += '<ul class ="details">'
+    userHtmlStr += '<li id ="userLocation">' + userLocation + '</li>'
+    userHtmlStr += '<li> <a href="' + userEmail + '">' + responsObj.email + '</a>'+ '</li>'
+    userHtmlStr += '<li id ="joined"> Joined on ' + joinDate + '</li>'
+    userHtmlStr += '</ul>'
     userHtmlStr += '<hr>'
+
     //stats for followers, starred, and following
     userHtmlStr += '<div class="cardStats">'
     userHtmlStr += '<div class ="stats" id="followers">' + followers
@@ -76,9 +110,15 @@ var userDataHandler = function(responsObj){
     userHtmlStr += '</div>'
     userHtmlStr += '<hr>'
 
-    var leftContainer = document.querySelector("#leftCol")
+    //place userHtmlStr into left container
     leftContainer.innerHTML = userHtmlStr
 }
 
-promise.then(repoDataHandler)
+//Construct repo data info
+
+var repoDataHandler = function(repoAry){
+    var repoHtmlStr = ''
+}
+
+repoPromise.then(repoDataHandler)
 userPromise.then(userDataHandler)

@@ -6,6 +6,17 @@ body {
     font-family: Helvetica, arial;
 }
 
+ul {
+    display: block;
+    margin: 0;
+    padding-left: 0
+}
+
+li {
+    list-style: none;
+    text-align: left;
+}
+
 .col{
     padding: 3%;
 }
